@@ -23,6 +23,13 @@ export function printQRCode(url: string): QROutput {
 
 /** On specific terminals we can print a smaller QR code */
 function supportsSextants() {
+  // Allow explicit opt-in/opt-out via EXPO_QR_SEXTANTS env var,
+  // useful when the terminal font lacks sextant glyphs (U+1FB00 range).
+  const explicit = env.EXPO_QR_SEXTANTS;
+  if (explicit !== undefined) {
+    return explicit;
+  }
+
   if (env.CI || !tty.isatty(1) || !tty.isatty(2)) {
     return false;
   } else if (process.env.COLOR === '0' || process.env.COLOR === 'false') {

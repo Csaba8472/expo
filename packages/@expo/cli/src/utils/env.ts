@@ -85,6 +85,16 @@ class Env {
   get EXPO_NO_QR_CODE(): boolean {
     return boolish('EXPO_NO_QR_CODE', false);
   }
+  /**
+   * Opt-in or opt-out of sextant (compact) QR code rendering.
+   * Set to `1`/`true` to force sextants, `0`/`false` to force half-block rendering.
+   * When unset, auto-detection based on terminal emulator is used.
+   */
+  get EXPO_QR_SEXTANTS(): boolean | undefined {
+    const value = process.env.EXPO_QR_SEXTANTS;
+    if (value === undefined || value === '') return undefined;
+    return boolish('EXPO_QR_SEXTANTS', false);
+  }
   /** The React Metro port that's baked into react-native scripts and tools. */
   get RCT_METRO_PORT() {
     return int('RCT_METRO_PORT', 0);
